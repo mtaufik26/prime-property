@@ -1,17 +1,33 @@
+import { ShieldCheck, Zap, Globe } from "lucide-react";
+
 export const HERO_CONTENT = {
-  badge: "Premium Real Estate",
+  badge: "Partner Properti Terpercaya",
   title: {
-    highlight: "Hunian Impian",
-    main: "Temukan yang Sesuai dengan Gaya Hidup Anda",
+    highlight: "Mendefinisikan",
+    main: "Temukan Ruang yang Sesuai dengan Hidup Anda",
   },
-  description: "Prime Property menghadirkan koleksi eksklusif properti pilihan dengan desain modern dan lokasi strategis. Kami membantu Anda menemukan tempat yang bukan sekadar rumah, tapi sebuah investasi masa depan.",
+  description:
+    "Koleksi properti eksklusif yang menggabungkan kemewahan arsitektur dengan kenyamanan modern di lokasi paling strategis untuk masa depan Anda.",
   cta: {
-    primary: "Lihat Properti",
-    secondary: "Konsultasi Gratis",
+    primary: "Eksplorasi Properti",
+    secondary: "Konsultasi Ahli",
   },
-  stats: [
-    { label: "Properti Terjual", value: "1,200+" },
-    { label: "Klien Puas", value: "850+" },
-    { label: "Penghargaan", value: "15+" },
-  ],
 };
+
+export const HERO_FEATURES = [
+  {
+    icon: Zap,
+    title: "Proses Cepat",
+    desc: "Transaksi aman dan efisien",
+  },
+  {
+    icon: Globe,
+    title: "Lokasi Strategis",
+    desc: "Akses mudah ke pusat kota",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Legalitas Terjamin",
+    desc: "Dokumen lengkap dan sah",
+  },
+];

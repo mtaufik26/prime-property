@@ -5,7 +5,7 @@ export const containerVariants: Variants = {
   visible: {
     transition: {
       staggerChildren: 0.12,
-      delayChildren: 0.1,
+      delayChildren: 0.08,
     },
   },
 };
@@ -34,13 +34,13 @@ export const titleVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.65,
       ease: [0.22, 1, 0.36, 1],
     },
   },
 };
 
-export const textVariants: Variants = {
+export const descriptionVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 18,
@@ -49,89 +49,69 @@ export const textVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.55,
-      ease: "easeOut",
-    },
-  },
-};
-
-export const featureVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.45,
-      ease: "easeOut",
-    },
-  },
-};
-
-export const buttonVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 15,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.45,
-      ease: "easeOut",
-    },
-  },
-};
-
-export const imageVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.97,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
-
-export const floatingCardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-    scale: 0.96,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      delay: 0.2,
       duration: 0.5,
       ease: "easeOut",
     },
   },
 };
 
-export const badgeFloatVariants: Variants = {
+export const cardVariants: Variants = {
   hidden: {
     opacity: 0,
-    scale: 0.8,
-    rotate: -8,
+    y: 28,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+export const iconVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.85,
   },
   visible: {
     opacity: 1,
     scale: 1,
-    rotate: 12,
     transition: {
-      delay: 0.25,
-      duration: 0.55,
-      ease: [0.22, 1, 0.36, 1],
+      duration: 0.45,
+      ease: "easeOut",
+    },
+  },
+};
+
+export const numberVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.7,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delay: 0.12,
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+};
+
+export const lineVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scaleX: 0,
+  },
+  visible: {
+    opacity: 1,
+    scaleX: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
     },
   },
 };

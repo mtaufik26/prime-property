@@ -1,144 +1,264 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bed, Bath, Square, MapPin, ArrowRight, Heart } from "lucide-react";
+import {
+  Bed,
+  Bath,
+  Square,
+  MapPin,
+  ArrowRight,
+  Heart,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
 import { PROPERTIES_CONTENT } from "./Properties.constants";
-import { containerVariants, cardVariants } from "./Properties.animations";
+
+import {
+  sectionVariants,
+  headerVariants,
+  filterVariants,
+  gridVariants,
+  cardVariants,
+  imageVariants,
+  contentVariants,
+  statVariants,
+  buttonVariants,
+} from "./Properties.animations";
 
 const Properties = () => {
   const [activeCategory, setActiveCategory] = useState("Semua");
 
-  const filteredListings = activeCategory === "Semua" 
-    ? PROPERTIES_CONTENT.listings 
-    : PROPERTIES_CONTENT.listings.filter(p => p.type === activeCategory);
+  const filteredListings = useMemo(() => {
+    return activeCategory === "Semua"
+      ? PROPERTIES_CONTENT.listings
+      : PROPERTIES_CONTENT.listings.filter(
+          (p) => p.type === activeCategory
+        );
+  }, [activeCategory]);
 
   return (
-    <section id="properti" className="py-24 lg:py-32 bg-slate-50 overflow-hidden scroll-mt-20">
+    <section
+      id="properti"
+      className="relative py-24 lg:py-32 bg-slate-50 overflow-hidden scroll-mt-20"
+    >
+      {/* Background Glow */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex flex-col items-start mb-12 lg:mb-16 space-y-4 lg:space-y-6 max-w-3xl">
-          <Badge variant="secondary" className="bg-primary/10 text-primary border-none px-4 py-1.5 rounded-full text-[0.7rem] lg:text-xs font-bold uppercase tracking-widest">
-            {PROPERTIES_CONTENT.badge}
-          </Badge>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
+        {/* Header */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="flex flex-col items-start mb-14 lg:mb-20 space-y-5 max-w-3xl"
+        >
+          <motion.div variants={headerVariants}>
+            <Badge className="bg-primary/10 text-primary border-none px-4 py-1.5 rounded-full text-[0.7rem] lg:text-xs font-bold uppercase tracking-[0.2em]">
+              {PROPERTIES_CONTENT.badge}
+            </Badge>
+          </motion.div>
+
+          <motion.h2
+            variants={headerVariants}
+            className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight"
+          >
             {PROPERTIES_CONTENT.title}
-          </h2>
-          <p className="text-base lg:text-lg text-slate-500 font-medium leading-relaxed">
+          </motion.h2>
+
+          <motion.p
+            variants={headerVariants}
+            className="text-sm md:text-base text-slate-500 leading-relaxed font-medium max-w-2xl"
+          >
             {PROPERTIES_CONTENT.description}
-          </p>
+          </motion.p>
 
           {/* Categories */}
-          <div className="flex flex-wrap gap-2 lg:gap-3 pt-4">
+          <motion.div
+            variants={filterVariants}
+            className="flex flex-wrap gap-3 pt-4"
+          >
             {PROPERTIES_CONTENT.categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 lg:px-8 py-2.5 lg:py-3 rounded-full text-xs lg:text-sm font-bold transition-all duration-300 ${
-                  activeCategory === cat 
-                    ? "bg-primary text-white shadow-xl shadow-primary/20 scale-105" 
-                    : "bg-white text-slate-500 border border-slate-200 hover:border-primary hover:text-primary"
+                className={`px-6 py-3 rounded-full text-xs lg:text-sm font-bold transition-all duration-300 active:scale-95 ${
+                  activeCategory === cat
+                    ? "bg-primary text-white shadow-lg shadow-primary/20"
+                    : "bg-white border border-slate-200 text-slate-500 hover:border-primary hover:text-primary"
                 }`}
               >
                 {cat}
               </button>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Listings Grid */}
+        {/* Cards */}
         <motion.div
           layout
-          variants={containerVariants}
+          variants={gridVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 min-h-[400px]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
         >
           <AnimatePresence mode="popLayout">
             {filteredListings.map((property) => (
-              <motion.div
+              <motion.article
                 key={property.id}
                 layout
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.3 } }}
-                className="group bg-white rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500"
+                exit={{
+                  opacity: 0,
+                  y: 20,
+                  transition: { duration: 0.2 },
+                }}
+                whileHover={{ y: -6 }}
+                className="group overflow-hidden rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 will-change-transform"
               >
-                {/* Image Container */}
-                <div className="relative h-64 lg:h-72 w-full overflow-hidden">
+                {/* Image */}
+                <motion.div
+                  variants={imageVariants}
+                  className="relative h-64 lg:h-72 overflow-hidden"
+                >
                   <Image
                     src={property.image}
                     alt={property.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    unoptimized
                   />
-                  <div className="absolute top-5 left-5 flex flex-col gap-2">
-                    <Badge className="bg-white/90 backdrop-blur-md text-slate-900 border-none shadow-sm px-3 py-1 rounded-full text-[0.65rem] font-bold">
+
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-transparent" />
+
+                  {/* Type */}
+                  <div className="absolute top-5 left-5">
+                    <Badge className="bg-white/90 text-slate-900 border-none backdrop-blur-sm rounded-full px-3 py-1 text-[0.65rem] font-bold shadow-sm">
                       {property.type}
                     </Badge>
                   </div>
+
+                  {/* Tag */}
                   <div className="absolute top-5 right-5">
-                    <Badge className="bg-primary text-white border-none shadow-sm px-3 py-1 rounded-full text-[0.65rem] font-bold">
+                    <Badge className="bg-primary text-white border-none rounded-full px-3 py-1 text-[0.65rem] font-bold shadow-lg">
                       {property.tag}
                     </Badge>
                   </div>
-                  <button className="absolute bottom-5 right-5 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-400 hover:text-red-500 hover:scale-110 transition-all shadow-lg">
+
+                  {/* Favorite */}
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    className="absolute bottom-5 right-5 w-11 h-11 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors shadow-lg"
+                  >
                     <Heart className="w-5 h-5" />
-                  </button>
-                </div>
+                  </motion.button>
+                </motion.div>
 
-                {/* Content Container */}
-                <div className="p-6 lg:p-8">
-                  <div className="flex items-center gap-2 text-slate-400 mb-2">
-                    <MapPin className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-[0.65rem] lg:text-[0.7rem] font-bold uppercase tracking-widest">{property.location}</span>
-                  </div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-slate-900 mb-4 group-hover:text-primary transition-colors line-clamp-1">
+                {/* Content */}
+                <motion.div
+                  variants={contentVariants}
+                  className="p-6 lg:p-8"
+                >
+                  {/* Location */}
+                  <motion.div
+                    variants={statVariants}
+                    className="flex items-center gap-2 text-slate-400 mb-3"
+                  >
+                    <MapPin className="w-4 h-4 text-primary" />
+
+                    <span className="text-[0.65rem] uppercase tracking-[0.2em] font-bold">
+                      {property.location}
+                    </span>
+                  </motion.div>
+
+                  {/* Title */}
+                  <motion.h3
+                    variants={statVariants}
+                    className="text-xl font-black text-slate-900 mb-5 group-hover:text-primary transition-colors line-clamp-1"
+                  >
                     {property.title}
-                  </h3>
-                  
-                  {/* Stats */}
-                  <div className="flex items-center justify-between py-4 lg:py-6 border-y border-slate-50 mb-4 lg:mb-6">
-                    <div className="flex items-center gap-2">
-                      <Bed className="w-4 h-4 lg:w-5 lg:h-5 text-slate-400" />
-                      <span className="text-xs lg:text-sm font-bold text-slate-700">{property.beds}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Bath className="w-4 h-4 lg:w-5 lg:h-5 text-slate-400" />
-                      <span className="text-xs lg:text-sm font-bold text-slate-700">{property.baths}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Square className="w-4 h-4 lg:w-5 lg:h-5 text-slate-400" />
-                      <span className="text-xs lg:text-sm font-bold text-slate-700">{property.area}</span>
-                    </div>
-                  </div>
+                  </motion.h3>
 
-                  {/* Price and Action */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Harga</span>
-                      <span className="text-lg lg:text-xl font-black text-primary">{property.price}</span>
+                  {/* Stats */}
+                  <motion.div
+                    variants={statVariants}
+                    className="flex items-center justify-between py-5 border-y border-slate-100 mb-6"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Bed className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm font-bold text-slate-700">
+                        {property.beds}
+                      </span>
                     </div>
-                    <Button className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-slate-50 text-slate-400 hover:bg-primary hover:text-white hover:rotate-[-45deg] transition-all">
-                      <ArrowRight className="w-5 h-5 lg:w-6 lg:h-6" />
+
+                    <div className="flex items-center gap-2">
+                      <Bath className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm font-bold text-slate-700">
+                        {property.baths}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Square className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm font-bold text-slate-700">
+                        {property.area}
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {/* Footer */}
+                  <motion.div
+                    variants={buttonVariants}
+                    className="flex items-center justify-between"
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-[0.6rem] uppercase tracking-[0.2em] font-bold text-slate-400">
+                        Harga
+                      </span>
+
+                      <span className="text-lg lg:text-xl font-black text-primary">
+                        {property.price}
+                      </span>
+                    </div>
+
+                    <Button className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 hover:bg-primary hover:text-white transition-all duration-300 active:scale-95">
+                      <ArrowRight className="w-5 h-5" />
                     </Button>
-                  </div>
-                </div>
-              </motion.div>
+                  </motion.div>
+                </motion.div>
+              </motion.article>
             ))}
           </AnimatePresence>
         </motion.div>
 
-        {/* View All */}
-        <div className="flex justify-center mt-12 lg:mt-16">
-          <Button size="lg" variant="outline" className="rounded-full px-10 lg:px-12 py-6 lg:py-7 text-sm lg:text-base font-bold border-2 hover:bg-white hover:shadow-xl transition-all active:scale-95">
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 0.5,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="flex justify-center mt-14 lg:mt-20"
+        >
+          <Button
+            size="lg"
+            variant="outline"
+            className="rounded-full px-10 py-7 text-sm lg:text-base font-bold border-2 bg-white hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-95"
+          >
             Lihat Semua Properti
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
