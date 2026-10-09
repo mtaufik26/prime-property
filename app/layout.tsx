@@ -6,11 +6,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Prime Property - Luxury Real Estate",
-  description: "Temukan hunian impian Anda dengan Prime Property. Koleksi properti eksklusif dan mewah.",
+  title: "Prime Property | Curated Luxury Residences & Private Estates",
+  description:
+    "Explore an exclusive portfolio of architecturally significant homes, private villas, and premium penthouses curated with discretion and distinction.",
 };
 
 export default function RootLayout({
@@ -23,7 +25,9 @@ export default function RootLayout({
       lang="en"
       className={`${plusJakartaSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+        {children}
+      </body>
     </html>
   );
 }

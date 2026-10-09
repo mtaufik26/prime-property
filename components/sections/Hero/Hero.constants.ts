@@ -1,33 +1,38 @@
-import { ShieldCheck, Zap, Globe } from "lucide-react";
+import { ShieldCheck, Compass, Award } from "lucide-react";
 
 export const HERO_CONTENT = {
-  badge: "Partner Properti Terpercaya",
+  badge: "Private Real Estate Advisory",
   title: {
-    highlight: "Mendefinisikan",
-    main: "Temukan Ruang yang Sesuai dengan Hidup Anda",
+    lead: "Architectural Distinction.",
+    main: "Exceptional Living.",
   },
   description:
-    "Koleksi properti eksklusif yang menggabungkan kemewahan arsitektur dengan kenyamanan modern di lokasi paling strategis untuk masa depan Anda.",
+    "Curating a discreet portfolio of architecturally significant homes, luxury penthouses, and private estates in the world's most sought-after enclaves.",
   cta: {
-    primary: "Eksplorasi Properti",
-    secondary: "Konsultasi Ahli",
+    primary: "Explore Residences",
+    primaryHref: "#residences",
+    secondary: "Private Consultation",
+    secondaryHref: "#inquire",
   },
 };
 
-export const HERO_FEATURES = [
+export const HERO_METRICS = [
   {
-    icon: Zap,
-    title: "Proses Cepat",
-    desc: "Transaksi aman dan efisien",
+    icon: Compass,
+    value: "$1.8B+",
+    label: "Portfolio Transacted",
+    desc: "Across prime international territories",
   },
   {
-    icon: Globe,
-    title: "Lokasi Strategis",
-    desc: "Akses mudah ke pusat kota",
+    icon: Award,
+    value: "14+ Years",
+    label: "Advisory Heritage",
+    desc: "Trusted by founders, leaders & estates",
   },
   {
     icon: ShieldCheck,
-    title: "Legalitas Terjamin",
-    desc: "Dokumen lengkap dan sah",
+    value: "100%",
+    label: "Verified Clear Titles",
+    desc: "Rigorous legal vetting & sovereign safety",
   },
 ];

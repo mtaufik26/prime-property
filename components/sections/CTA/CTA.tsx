@@ -1,113 +1,241 @@
 "use client";
 
-import React, { memo } from "react";
-import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useState, memo } from "react";
+import { motion } from "framer-motion";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, PhoneCall } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa6";
 import { CTA_CONTENT } from "./CTA.constants";
 
-import {
-  ctaContainerVariantsOptimized,
-  fadeUpVariantsOptimized,
-  buttonVariantsOptimized,
-} from "./CTA.animations";
-
-// ✅ Optimasi 1: Memoize komponen
 const CTA = memo(() => {
-  const shouldReduceMotion = useReducedMotion();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    property: CTA_CONTENT.propertyOptions[0],
+    message: "",
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // ✅ Optimasi 2: GPU promotion hanya untuk elemen yang benar-benar animasi transform
-  const gpuTransform = { willChange: 'transform', transform: 'translateZ(0)' };
-  const gpuOpacity = { willChange: 'opacity' };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) return;
+
+    setIsLoading(true);
+    // Showcase simulation: instantaneous, clean, reliable without backend dependency
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSubmitted(true);
+    }, 600);
+  };
+
+  const handleReset = () => {
+    setFormData({
+      name: "",
+      email: "",
+      property: CTA_CONTENT.propertyOptions[0],
+      message: "",
+    });
+    setIsSubmitted(false);
+  };
 
   return (
     <section
-      id="kontak"
-      className="py-20 lg:py-28 bg-white overflow-hidden"
+      id="inquire"
+      className="relative py-24 lg:py-32 bg-stone-950 text-white overflow-hidden scroll-mt-20"
     >
-      <div className="container mx-auto px-6 lg:px-12">
-        {/* ✅ Optimasi 3: Hanya 1 motion wrapper utama untuk seluruh section */}
-        <motion.div
-          variants={ctaContainerVariantsOptimized}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="relative rounded-[2.5rem] lg:rounded-[3.5rem] overflow-hidden px-6 py-16 lg:py-24 text-center shadow-2xl shadow-slate-200"
-          style={gpuOpacity}
-          layout={false}
-        >
-          
-          {/* Background - ✅ Optimasi 4: Blur statis, hanya opacity yang animasi */}
-          <div className="absolute inset-0 z-0 bg-slate-900">
-            <Image
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000"
-              alt="Luxury Interior"
-              fill
-              sizes="100vw"
-              priority
-              fetchPriority="high" // ✅ Optimasi 5: Prioritaskan loading gambar
-              className="object-cover opacity-60"
-            />
-            {/* Overlay statis - tidak dianimasikan */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/80 to-slate-950/40" />
-            <div className="absolute inset-0 bg-slate-950/40" />
-          </div>
-
-          {/* ✅ Optimasi 6: Glow dengan blur statis + animasi opacity via CSS keyframes */}
-          <div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/20 blur-[120px] rounded-full z-0 animate-glow-fade-in"
-            style={gpuOpacity}
-          />
-
-          {/* Content - ✅ Optimasi 7: Group elemen jadi lebih sedikit motion wrapper */}
-          <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center space-y-6 lg:space-y-10">
-            
-            {/* Badge + Title + Description dalam 1 motion wrapper */}
-            <motion.div
-              variants={fadeUpVariantsOptimized}
-              className="flex flex-col items-center space-y-4 lg:space-y-6"
-              style={gpuTransform}
-              layout={false}
-            >
-              {/* Badge - ✅ Optimasi 8: Hapus motion.div nested, animasi via parent */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white text-[0.7rem] lg:text-xs font-bold uppercase tracking-[0.2em]">
-                <PhoneCall className="w-3.5 h-3.5 text-primary" />
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-6xl mx-auto">
+          {/* Left Column: Advisory Narrative & Coordinates (5 cols) */}
+          <div className="lg:col-span-5 space-y-8">
+            <div>
+              <span className="inline-block px-3.5 py-1 rounded-full bg-stone-800 border border-stone-700 text-stone-200 text-[0.7rem] font-bold uppercase tracking-[0.2em] mb-4">
                 {CTA_CONTENT.badge}
-              </div>
-
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight max-w-3xl">
-                Siap Memulai <br />
-                <span className="text-primary italic">
-                  {CTA_CONTENT.headlineItalic}
-                </span>
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.12]">
+                {CTA_CONTENT.headline}
               </h2>
-
-              <p className="text-sm lg:text-base text-white/70 max-w-xl font-medium leading-relaxed">
+              <p className="text-sm sm:text-base text-stone-300 leading-relaxed font-normal mt-4">
                 {CTA_CONTENT.description}
               </p>
-            </motion.div>
+            </div>
 
-            {/* Buttons - ✅ Optimasi 9: Animasi button dengan delay minimal */}
-            <motion.div
-              variants={buttonVariantsOptimized}
-              className="flex flex-wrap justify-center gap-4 lg:gap-5 pt-4 w-full"
-              style={gpuTransform}
-              layout={false}
-            >
-              <a href="#properti">
-                <Button
-                  size="lg"
-                  className="rounded-full px-8 py-7 text-xs lg:text-sm font-bold bg-primary hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl shadow-primary/20"
-                >
-                  {CTA_CONTENT.primaryAction}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </a>
-            </motion.div>
+            {/* Direct Contact Coordinates */}
+            <div className="space-y-4 pt-2 border-t border-stone-800">
+              {CTA_CONTENT.directContacts.map((contact, idx) => (
+                <div key={idx} className="flex items-start gap-3.5">
+                  <div className="w-8 h-8 rounded-lg bg-stone-900 border border-stone-800 flex items-center justify-center shrink-0 mt-0.5">
+                    {idx === 0 && <Phone className="w-4 h-4 text-stone-300" />}
+                    {idx === 1 && <Mail className="w-4 h-4 text-stone-300" />}
+                    {idx === 2 && <MapPin className="w-4 h-4 text-stone-300" />}
+                  </div>
+                  <div>
+                    <span className="block text-[0.65rem] uppercase tracking-wider font-semibold text-stone-400">
+                      {contact.label}
+                    </span>
+                    <a
+                      href={contact.href}
+                      className="text-xs sm:text-sm font-medium text-stone-100 hover:text-white transition-colors"
+                    >
+                      {contact.value}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Discretion Note */}
+            <div className="flex items-center gap-2.5 p-3.5 rounded-xl bg-stone-900/60 border border-stone-800 text-xs text-stone-400">
+              <ShieldCheck className="w-4 h-4 text-stone-300 shrink-0" />
+              <span>Strict non-disclosure protocols apply to all inquiries.</span>
+            </div>
           </div>
-        </motion.div>
+
+          {/* Right Column: Interactive Consultation Inquiry Form (7 cols) */}
+          <div className="lg:col-span-7 bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md">
+            {isSubmitted ? (
+              <div className="py-12 px-4 text-center space-y-5">
+                <div className="w-14 h-14 rounded-full bg-stone-800 border border-stone-700 text-stone-200 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                  Consultation Request Received
+                </h3>
+                <p className="text-stone-300 text-sm max-w-md mx-auto leading-relaxed">
+                  Thank you, <strong className="text-white">{formData.name}</strong>. A
+                  senior private client partner has received your request regarding{" "}
+                  <strong className="text-white">{formData.property}</strong> and will contact
+                  you within 24 hours.
+                </p>
+                <div className="pt-4">
+                  <Button
+                    onClick={handleReset}
+                    variant="outline"
+                    className="rounded-full px-6 text-xs font-semibold uppercase tracking-wider border-stone-700 bg-stone-800 text-white hover:bg-stone-700"
+                  >
+                    Submit Another Request
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <h3 className="text-xl font-bold text-white tracking-tight mb-1">
+                    Request Confidential Portfolio Access
+                  </h3>
+                  <p className="text-xs text-stone-400">
+                    Please provide your contact coordinates to connect with an advisory director.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="client-name"
+                      className="block text-[0.7rem] uppercase tracking-wider font-semibold text-stone-300"
+                    >
+                      Full Name *
+                    </label>
+                    <input
+                      id="client-name"
+                      type="text"
+                      required
+                      placeholder="e.g. Lord Harrington"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="w-full h-11 px-3.5 rounded-xl bg-stone-950/80 border border-stone-800 text-sm text-white placeholder:text-stone-600 focus:outline-none focus:border-stone-400 transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="client-email"
+                      className="block text-[0.7rem] uppercase tracking-wider font-semibold text-stone-300"
+                    >
+                      Email Address *
+                    </label>
+                    <input
+                      id="client-email"
+                      type="email"
+                      required
+                      placeholder="e.g. harrington@estate.com"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="w-full h-11 px-3.5 rounded-xl bg-stone-950/80 border border-stone-800 text-sm text-white placeholder:text-stone-600 focus:outline-none focus:border-stone-400 transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="property-selection"
+                    className="block text-[0.7rem] uppercase tracking-wider font-semibold text-stone-300"
+                  >
+                    Residence or Subject of Interest
+                  </label>
+                  <select
+                    id="property-selection"
+                    value={formData.property}
+                    onChange={(e) =>
+                      setFormData({ ...formData, property: e.target.value })
+                    }
+                    className="w-full h-11 px-3.5 rounded-xl bg-stone-950/80 border border-stone-800 text-sm text-white focus:outline-none focus:border-stone-400 transition-colors cursor-pointer"
+                  >
+                    {CTA_CONTENT.propertyOptions.map((opt, i) => (
+                      <option key={i} value={opt} className="bg-stone-900 text-white">
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="client-message"
+                    className="block text-[0.7rem] uppercase tracking-wider font-semibold text-stone-300"
+                  >
+                    Specific Requirements or Timeline (Optional)
+                  </label>
+                  <textarea
+                    id="client-message"
+                    rows={3}
+                    placeholder="Provide any preferences regarding location, architectural style, or private viewing schedule..."
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    className="w-full p-3 rounded-xl bg-stone-950/80 border border-stone-800 text-sm text-white placeholder:text-stone-600 focus:outline-none focus:border-stone-400 transition-colors resize-none"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full rounded-full h-12 text-xs font-bold uppercase tracking-wider bg-white text-stone-950 hover:bg-stone-100 transition-all duration-200 mt-2"
+                >
+                  {isLoading ? (
+                    "Transmitting Request..."
+                  ) : (
+                    <>
+                      Submit Confidential Request
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

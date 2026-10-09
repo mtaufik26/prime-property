@@ -1,39 +1,54 @@
-import { Home, Key, BadgePercent, Calculator, Search, ShieldCheck } from "lucide-react";
+import { Compass, BarChart3, Building, ShieldCheck } from "lucide-react";
 
 export const SERVICES_CONTENT = {
-  badge: "Layanan Kami",
-  title: "Solusi Properti Lengkap untuk Anda",
-  description: "Kami menyediakan berbagai layanan profesional untuk membantu Anda dalam setiap langkah perjalanan properti Anda.",
+  badge: "Advisory Practices",
+  title: "Private Client Real Estate Services",
+  description:
+    "We provide bespoke counsel tailored to the unique requirements of private collectors, family offices, and institutional investors.",
   services: [
     {
-      title: "Jual Beli Properti",
-      description: "Bantuan profesional dalam menemukan pembeli terbaik atau rumah impian Anda dengan harga yang tepat.",
-      icon: Home,
+      title: "Private Acquisitions & Representation",
+      description:
+        "Discreet sourcing and negotiation for unlisted, off-market estates and prime architectural residences with total buyer anonymity.",
+      icon: Compass,
+      highlights: [
+        "Off-Market Portfolio Access",
+        "Confidential Negotiation Protocol",
+        "Comprehensive Due Diligence",
+      ],
     },
     {
-      title: "Manajemen Properti",
-      description: "Layanan pengelolaan properti untuk memaksimalkan ROI dan menjaga kondisi properti Anda tetap prima.",
-      icon: Key,
+      title: "Architectural & Market Valuation",
+      description:
+        "Independent, rigorous appraisals combining architectural pedigree analysis, spatial replacement costs, and macroeconomic trends.",
+      icon: BarChart3,
+      highlights: [
+        "Comparative Market Modeling",
+        "Architectural Replacement Value",
+        "Capital Growth Projections",
+      ],
     },
     {
-      title: "Konsultasi KPR",
-      description: "Panduan lengkap mengenai pembiayaan dan pengajuan KPR dengan bunga kompetitif dari mitra bank kami.",
-      icon: Calculator,
+      title: "Portfolio Asset Management",
+      description:
+        "Active stewardship for multi-asset real estate holdings, optimizing net yields, maintenance protocols, and capital preservation.",
+      icon: Building,
+      highlights: [
+        "High-Yield Tenancy Curation",
+        "Preventative Maintenance Governance",
+        "Periodic Portfolio Performance Audits",
+      ],
     },
     {
-      title: "Penilaian Properti",
-      description: "Estimasi nilai pasar properti yang akurat untuk keperluan penjualan, asuransi, atau investasi.",
-      icon: Search,
-    },
-    {
-      title: "Strategi Investasi",
-      description: "Analisis mendalam tentang potensi pasar real estate untuk membantu Anda membuat keputusan investasi cerdas.",
-      icon: BadgePercent,
-    },
-    {
-      title: "Legalitas & Notaris",
-      description: "Pengurusan dokumen hukum, sertifikat, dan akta jual beli secara aman dan transparan.",
+      title: "Conveyancing & Legal Escrow",
+      description:
+        "End-to-end title verification, cross-border remittance structuring, notary liaison, and transparent escrow account administration.",
       icon: ShieldCheck,
+      highlights: [
+        "Unencumbered Title Verification",
+        "Cross-Border Escrow Administration",
+        "Tax & Sovereign Compliance",
+      ],
     },
   ],
 };

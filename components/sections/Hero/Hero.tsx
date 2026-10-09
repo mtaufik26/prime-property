@@ -3,122 +3,122 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, ShieldCheck } from "lucide-react";
-
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import {
   containerVariants,
   itemVariants,
   statsVariants,
 } from "./Hero.animations";
-
-import { HERO_CONTENT, HERO_FEATURES } from "./Hero.constants";
+import { HERO_CONTENT, HERO_METRICS } from "./Hero.constants";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
+    <section className="relative min-h-[92vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden bg-stone-950 text-white">
+      {/* Background Architectural Photography */}
+      <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1589282741585-30ab896335cd?auto=format&fit=crop&q=80&w=1600"
-          alt="Luxury Architectural Background"
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=85&w=2000"
+          alt="Architectural luxury residence exterior"
           fill
           priority
-          unoptimized
-          className="object-cover object-[75%_center] lg:object-center"
+          sizes="100vw"
+          className="object-cover object-center filter brightness-[0.78]"
         />
-        <div className="absolute inset-0 bg-slate-950/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-slate-950/20" />
+        {/* Subtle, natural gradient overlays for perfect text legibility without artificial neon glow */}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-stone-950/70" />
+        <div className="absolute inset-0 bg-stone-950/20" />
       </div>
 
-      {/* Glow */}
-      <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-[20%] left-[10%] w-[320px] h-[320px] lg:w-[500px] lg:h-[500px] bg-primary/20 blur-[120px] rounded-full" />
-      </div>
-
-      <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-16 md:pt-20 lg:pt-24 pb-20 lg:pb-32">
-        <div className="max-w-5xl">
+      {/* Main Content Area */}
+      <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-32 sm:pt-40 lg:pt-44 pb-12 flex-1 flex flex-col justify-center">
+        <div className="max-w-4xl">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col items-start space-y-7 lg:space-y-9"
+            className="flex flex-col items-start space-y-6 lg:space-y-8"
           >
-            {/* Badge */}
+            {/* Editorial Badge */}
             <motion.div variants={itemVariants}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm text-white text-[0.7rem] font-bold uppercase tracking-[0.2em]">
-                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-stone-900/60 backdrop-blur-md text-stone-200 text-[0.7rem] font-semibold uppercase tracking-[0.22em]">
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-300" />
                 {HERO_CONTENT.badge}
               </div>
             </motion.div>
 
-            {/* Heading */}
-            <motion.div variants={itemVariants} className="space-y-5">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight">
-                {HERO_CONTENT.title.main}
-                <br />
-                <span className="text-primary italic">
-                  {HERO_CONTENT.title.highlight}
+            {/* Headline */}
+            <motion.div variants={itemVariants} className="space-y-3">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.06]">
+                <span className="block text-stone-100">{HERO_CONTENT.title.lead}</span>
+                <span className="block font-light italic text-stone-200">
+                  {HERO_CONTENT.title.main}
                 </span>
               </h1>
 
-              <p className="text-sm md:text-base lg:text-lg text-white/75 max-w-xl leading-relaxed font-medium">
+              <p className="text-sm sm:text-base lg:text-lg text-stone-300/90 max-w-2xl leading-relaxed font-normal pt-2">
                 {HERO_CONTENT.description}
               </p>
             </motion.div>
 
-            {/* CTA */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <Button className="rounded-full px-8 py-6 font-bold bg-primary text-white">
-                {HERO_CONTENT.cta.primary}
-              </Button>
+            {/* CTAs */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-4 pt-2"
+            >
+              <a href={HERO_CONTENT.cta.primaryHref}>
+                <Button className="rounded-full px-8 h-12 text-xs sm:text-sm font-bold tracking-wider uppercase bg-white text-stone-950 hover:bg-stone-100 transition-all duration-200 group">
+                  {HERO_CONTENT.cta.primary}
+                  <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Button>
+              </a>
 
-              <Button
-                variant="outline"
-                className="rounded-full px-8 py-6 font-bold border-white/15 bg-white/10 text-white"
-              >
-                {HERO_CONTENT.cta.secondary}
-              </Button>
+              <a href={HERO_CONTENT.cta.secondaryHref}>
+                <Button
+                  variant="outline"
+                  className="rounded-full px-7 h-12 text-xs sm:text-sm font-semibold tracking-wider uppercase border border-white/25 bg-black/30 backdrop-blur-sm text-white hover:bg-white/10 hover:border-white/50 transition-colors"
+                >
+                  {HERO_CONTENT.cta.secondary}
+                </Button>
+              </a>
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Features */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl"
-        >
-          {HERO_FEATURES.map((item, i) => (
-            <motion.div
-              key={i}
-              variants={statsVariants}
-              className="group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:-translate-y-1 transition"
-            >
-              <div className="flex flex-col gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center">
-                  <item.icon className="w-5 h-5 text-primary" />
-                </div>
-
-                <div>
-                  <h3 className="text-white font-bold text-sm">
-                    {item.title}
-                  </h3>
-                  <p className="text-white/60 text-xs mt-2">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
 
-      {/* Scroll */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 md:hidden text-white/40 animate-bounce">
-        <ArrowRight className="w-5 h-5 rotate-90" />
+      {/* Proof Metrics Strip */}
+      <div className="relative z-10 border-t border-white/10 bg-stone-950/80 backdrop-blur-md">
+        <div className="container mx-auto px-6 lg:px-12 py-6 lg:py-8">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-12"
+          >
+            {HERO_METRICS.map((metric, i) => (
+              <motion.div
+                key={i}
+                variants={statsVariants}
+                className="flex items-start gap-4"
+              >
+                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
+                  <metric.icon className="w-5 h-5 text-stone-200" />
+                </div>
+                <div>
+                  <div className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                    {metric.value}
+                  </div>
+                  <div className="text-xs font-semibold text-stone-200 uppercase tracking-wider mt-0.5">
+                    {metric.label}
+                  </div>
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    {metric.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

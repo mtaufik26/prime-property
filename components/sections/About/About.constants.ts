@@ -1,20 +1,28 @@
 export const ABOUT_CONTENT = {
-  badge: "Tentang Prime Property",
-  title: "Membangun Masa Depan Properti yang Lebih Baik",
-  description: "Di Prime Property, kami percaya bahwa setiap individu layak mendapatkan hunian impian mereka. Dengan pengalaman lebih dari satu dekade, kami telah membantu ribuan keluarga menemukan tempat yang mereka sebut rumah.",
-  features: [
+  badge: "Heritage & Philosophy",
+  title: "Discretion, Rigor, and an Eye for Architectural Significance",
+  description:
+    "For over fourteen years, Prime Property has advised discerning collectors, private investors, and families seeking more than mere square footage. We cultivate a rare appreciation for spaces that celebrate light, proportion, craftsmanship, and enduring architectural pedigree.",
+  pillars: [
     {
-      title: "Visi Kami",
-      description: "Menjadi pemimpin pasar dalam industri real estate dengan mengedepankan inovasi dan kepuasan pelanggan.",
+      title: "Architectural Integrity",
+      description:
+        "We curate residences designed by renowned architects, ensuring authentic materials, structural longevity, and spatial distinction.",
     },
     {
-      title: "Misi Kami",
-      description: "Memberikan layanan konsultasi properti yang transparan, aman, dan profesional untuk semua kalangan.",
+      title: "Confidential Advisory",
+      description:
+        "Every client representation is anchored in absolute discretion, off-market transaction access, and private bilateral agreements.",
+    },
+    {
+      title: "Title & Sovereign Governance",
+      description:
+        "All acquisitions undergo comprehensive legal vetting, ensuring unencumbered titles, regulatory compliance, and clean escrow execution.",
     },
   ],
   stats: [
-    { label: "Tahun Pengalaman", value: "12+" },
-    { label: "Properti Terjual", value: "2,500+" },
-    { label: "Klien Terpercaya", value: "1,800+" },
+    { value: "14+", label: "Years of Distinction" },
+    { value: "$1.8B+", label: "Transacted Volume" },
+    { value: "99.4%", label: "Client Advisory Trust" },
   ],
 };

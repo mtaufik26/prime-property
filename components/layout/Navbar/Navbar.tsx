@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -23,16 +25,21 @@ import {
 } from "./Navbar.animations";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const resolveHref = (href: string) => {
+    if (href.startsWith("#") && pathname !== "/") {
+      return `/${href}`;
+    }
+    return href;
+  };
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-
-    // Langsung cek posisi scroll saat halaman dimuat/refresh
     handleScroll();
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -42,69 +49,96 @@ const Navbar = () => {
       initial="hidden"
       animate="visible"
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-50 py-2 sm:py-4 transition-all duration-300",
         isScrolled
-          ? "bg-white/70 backdrop-blur-2xl shadow-sm"
+          ? "bg-white/90 backdrop-blur-md border-b border-stone-200/80 shadow-xs"
           : "bg-transparent"
       )}
     >
-      <div className="container mx-auto px-6 lg:px-12 flex items-center justify-between">
-
-        {/* LOGO (A) */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
+        {/* LOGO */}
         <motion.div variants={logoVariants} initial="hidden" animate="visible">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-6 transition-all duration-500">
-              <NAV_CONTENT.logo.icon className="text-white w-5 h-5" />
+          <Link href="/" className="flex items-center gap-2 group">
+            <div
+              className={cn(
+                "w-7.5 h-7.5 sm:w-9 sm:h-9 rounded-md sm:rounded-lg flex items-center justify-center transition-all duration-300",
+                isScrolled
+                  ? "bg-stone-900 text-white"
+                  : "bg-white/15 text-white backdrop-blur-md border border-white/20"
+              )}
+            >
+              <NAV_CONTENT.logo.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
 
             <span
               className={cn(
-                "text-xl font-bold tracking-tight transition-colors duration-500",
-                isScrolled ? "text-slate-900" : "text-white"
+                "text-xs sm:text-base tracking-[0.16em] sm:tracking-[0.18em] font-extrabold transition-colors duration-300 flex items-center gap-1",
+                isScrolled ? "text-stone-900" : "text-white"
               )}
             >
-              {NAV_CONTENT.logo.name}
-              <span className="text-primary">
+              <span>{NAV_CONTENT.logo.name}</span>
+              <span className="font-light opacity-80">
                 {NAV_CONTENT.logo.highlight}
               </span>
             </span>
           </Link>
         </motion.div>
 
-        {/* DESKTOP MENU (B - stagger biar tidak nyatu) */}
+        {/* DESKTOP MENU */}
         <motion.nav
           variants={linkContainerVariants}
           initial="hidden"
           animate="visible"
-          className="hidden lg:flex items-center gap-10"
+          className="hidden lg:flex items-center gap-8"
         >
-          {NAV_CONTENT.links.map((link, i) => (
-            <motion.div key={link.name} variants={linkVariants}>
-              <Link
-                href={link.href}
-                className={cn(
-                  "group text-sm font-semibold relative py-2 transition-colors",
-                  isScrolled
-                    ? "text-slate-600 hover:text-primary"
-                    : "text-white/80 hover:text-white"
-                )}
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all group-hover:w-full" />
-              </Link>
-            </motion.div>
-          ))}
+          {NAV_CONTENT.links.map((link) => {
+            const isActive = pathname === "/residences" && link.name === "Residences";
+            return (
+              <motion.div key={link.name} variants={linkVariants}>
+                <a
+                  href={resolveHref(link.href)}
+                  className={cn(
+                    "text-xs font-semibold uppercase tracking-wider relative py-1.5 transition-colors duration-200",
+                    isScrolled
+                      ? isActive
+                        ? "text-stone-950 font-bold"
+                        : "text-stone-600 hover:text-stone-950"
+                      : isActive
+                        ? "text-white font-bold"
+                        : "text-stone-200 hover:text-white"
+                  )}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span
+                      className={cn(
+                        "absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full",
+                        isScrolled ? "bg-stone-900" : "bg-white"
+                      )}
+                    />
+                  )}
+                </a>
+              </motion.div>
+            );
+          })}
         </motion.nav>
 
-        {/* CTA (C - dipisah biar tidak ikut animasi menu) */}
+        {/* CTA BUTTON */}
         <motion.div
           variants={ctaVariants}
           initial="hidden"
           animate="visible"
           className="hidden lg:flex items-center gap-4"
         >
-          <a href="#kontak">
-            <Button className="rounded-full px-8 h-11 text-sm font-bold bg-primary text-white hover:-translate-y-0.5 transition-all duration-300">
+          <a href={resolveHref(NAV_CONTENT.actions.contactHref)}>
+            <Button
+              className={cn(
+                "rounded-full px-6 h-10 text-xs font-bold tracking-wider uppercase transition-all duration-200",
+                isScrolled
+                  ? "bg-stone-900 text-white hover:bg-stone-800"
+                  : "bg-white text-stone-950 hover:bg-stone-100 shadow-sm"
+              )}
+            >
               {NAV_CONTENT.actions.contact}
             </Button>
           </a>
@@ -117,43 +151,66 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="icon"
+                aria-label="Open navigation menu"
                 className={cn(
-                  isScrolled ? "text-slate-900" : "text-white"
+                  "rounded-full w-8 h-8 sm:w-9 sm:h-9",
+                  isScrolled ? "text-stone-900" : "text-white hover:bg-white/10"
                 )}
               >
-                <Menu className="w-6 h-6" />
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </SheetTrigger>
 
-            <SheetContent className="w-full sm:w-[350px] bg-white p-0">
-              <SheetHeader className="p-8 pb-0 text-left">
-                <SheetTitle className="flex items-center gap-2 text-xl font-bold">
-                  <NAV_CONTENT.logo.icon className="w-6 h-6 text-primary" />
-                  {NAV_CONTENT.logo.name}
-                  {NAV_CONTENT.logo.highlight}
+            <SheetContent className="w-full sm:w-[360px] bg-white p-0 border-l border-stone-200">
+              <SheetHeader className="p-6 border-b border-stone-100">
+                <SheetTitle className="flex items-center gap-2.5 text-base tracking-[0.16em] font-extrabold text-stone-900">
+                  <div className="w-8 h-8 rounded-md bg-stone-900 text-white flex items-center justify-center">
+                    <NAV_CONTENT.logo.icon className="w-4 h-4" />
+                  </div>
+                  <span>{NAV_CONTENT.logo.name}</span>
+                  <span className="font-light opacity-75">
+                    {NAV_CONTENT.logo.highlight}
+                  </span>
                 </SheetTitle>
+                <SheetDescription className="sr-only">
+                  Mobile navigation menu and links
+                </SheetDescription>
               </SheetHeader>
 
-              <div className="flex flex-col gap-2 p-6 mt-4">
-                {NAV_CONTENT.links.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="px-4 py-4 rounded-2xl hover:bg-slate-50 font-bold hover:text-primary transition-all"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
+              <div className="flex flex-col gap-1 p-6">
+                {NAV_CONTENT.links.map((link) => {
+                  const isActive = pathname === "/residences" && link.name === "Residences";
+                  return (
+                    <a
+                      key={link.name}
+                      href={resolveHref(link.href)}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        "px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-colors flex items-center justify-between",
+                        isActive
+                          ? "bg-stone-900 text-white font-bold"
+                          : "text-stone-700 hover:text-stone-950 hover:bg-stone-50"
+                      )}
+                    >
+                      <span>{link.name}</span>
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                      )}
+                    </a>
+                  );
+                })}
               </div>
 
-              <div className="mt-auto p-6 border-t">
-                <Button 
+              <div className="mt-auto p-6 border-t border-stone-100">
+                <a
+                  href={resolveHref(NAV_CONTENT.actions.contactHref)}
                   onClick={() => setIsOpen(false)}
-                  className="w-full rounded-2xl h-12 font-bold"
+                  className="block"
                 >
-                  {NAV_CONTENT.actions.contact}
-                </Button>
+                  <Button className="w-full rounded-full h-11 text-xs font-bold uppercase tracking-wider bg-stone-900 text-white hover:bg-stone-800">
+                    {NAV_CONTENT.actions.contact}
+                  </Button>
+                </a>
               </div>
             </SheetContent>
           </Sheet>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronUp, Building2 } from "lucide-react";
+import { ChevronUp, Building2, ShieldCheck } from "lucide-react";
 import { FOOTER_CONTENT } from "./Footer.constants";
 import {
   footerContainerVariants,
@@ -16,11 +16,10 @@ const Footer = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 300);
+      setIsVisible(window.scrollY > 400);
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
@@ -32,152 +31,137 @@ const Footer = () => {
   };
 
   return (
-    <footer className="w-full relative bg-slate-950 text-white pt-20 lg:pt-28 pb-10 overflow-hidden isolate">
-      {/* Fix sub-pixel gap at the bottom */}
-      <div className="absolute inset-x-0 -bottom-1 h-2 bg-slate-950 -z-10" />
-
-      {/* Background Glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-[-10%] w-[300px] h-[300px] bg-primary/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[350px] h-[350px] bg-sky-400/10 blur-[140px] rounded-full" />
-      </div>
-
+    <footer className="w-full relative bg-stone-950 text-white pt-20 pb-12 overflow-hidden border-t border-stone-800">
       <div className="container relative z-10 mx-auto px-6 lg:px-12">
-        {/* Main Grid - Improved Tablet Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-20">
-          
-          {/* Brand - Spans 2 columns on mobile/tablet for better balance */}
-          <motion.div
-            variants={footerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col space-y-6 sm:col-span-2 lg:col-span-1"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                <Building2 className="text-white w-5 h-5" />
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 mb-16">
+          {/* Brand Info (4 cols) */}
+          <div className="lg:col-span-4 flex flex-col space-y-6">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-stone-900 border border-stone-800 flex items-center justify-center">
+                <Building2 className="text-white w-4 h-4" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-base tracking-[0.18em] font-extrabold text-white">
                 {FOOTER_CONTENT.brand.name}
               </span>
             </div>
-            <motion.p
-              variants={footerItemVariants}
-              className="text-slate-400 text-xs lg:text-sm font-medium leading-relaxed max-w-sm lg:max-w-none"
-            >
+
+            <p className="text-stone-400 text-xs sm:text-sm font-normal leading-relaxed max-w-sm">
               {FOOTER_CONTENT.brand.description}
-            </motion.p>
-          </motion.div>
+            </p>
 
-          {/* Company Links */}
-          <motion.div
-            variants={footerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col space-y-6"
-          >
-            <h4 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-500">Perusahaan</h4>
-            <ul className="space-y-4">
-              {FOOTER_CONTENT.links.perusahaan.map((link) => (
-                <motion.li key={link.name} variants={footerItemVariants}>
-                  <a href={link.href} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+            <div className="inline-flex items-center gap-2 text-xs text-stone-500 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-stone-400" />
+              <span>Registered Private Real Estate Advisory</span>
+            </div>
+          </div>
+
+          {/* Portfolio Links (2 cols) */}
+          <div className="lg:col-span-2 flex flex-col space-y-4">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Residences
+            </h4>
+            <ul className="space-y-3">
+              {FOOTER_CONTENT.links.portfolio.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-stone-400 hover:text-white transition-colors text-xs font-medium"
+                  >
                     {link.name}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Services Links */}
-          <motion.div
-            variants={footerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col space-y-6"
-          >
-            <h4 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-500">Layanan</h4>
-            <ul className="space-y-4">
-              {FOOTER_CONTENT.links.layanan.map((link) => (
-                <motion.li key={link.name} variants={footerItemVariants}>
-                  <a href={link.href} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+          {/* Advisory Links (2 cols) */}
+          <div className="lg:col-span-2 flex flex-col space-y-4">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Advisory
+            </h4>
+            <ul className="space-y-3">
+              {FOOTER_CONTENT.links.advisory.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-stone-400 hover:text-white transition-colors text-xs font-medium"
+                  >
                     {link.name}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Support Links */}
-          <motion.div
-            variants={footerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col space-y-6"
-          >
-            <h4 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-500">Dukungan</h4>
-            <ul className="space-y-4">
-              {FOOTER_CONTENT.links.dukungan.map((link) => (
-                <motion.li key={link.name} variants={footerItemVariants}>
-                  <a href={link.href} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+          {/* Company Links (2 cols) */}
+          <div className="lg:col-span-2 flex flex-col space-y-4">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Company
+            </h4>
+            <ul className="space-y-3">
+              {FOOTER_CONTENT.links.company.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-stone-400 hover:text-white transition-colors text-xs font-medium"
+                  >
                     {link.name}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Contact Info */}
-          <motion.div
-            variants={footerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col space-y-6"
-          >
-            <h4 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-500">{FOOTER_CONTENT.contact.title}</h4>
-            <ul className="space-y-5">
-              {FOOTER_CONTENT.contact.details.map((detail) => (
-                <motion.li key={detail.label} variants={footerItemVariants} className="flex flex-col space-y-1">
-                  <span className="text-[0.6rem] font-bold text-slate-600 uppercase tracking-tighter">{detail.label}</span>
-                  <a href={detail.href} className="text-slate-300 hover:text-primary transition-colors text-sm font-medium">
-                    {detail.value}
-                  </a>
-                </motion.li>
+          {/* Global Chambers / Offices (2 cols) */}
+          <div className="lg:col-span-2 flex flex-col space-y-4">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-stone-400">
+              {FOOTER_CONTENT.offices.title}
+            </h4>
+            <ul className="space-y-3">
+              {FOOTER_CONTENT.offices.locations.map((loc) => (
+                <li key={loc.city} className="flex flex-col">
+                  <span className="text-xs font-bold text-stone-200">
+                    {loc.city}
+                  </span>
+                  <span className="text-[0.65rem] text-stone-400">
+                    {loc.address}
+                  </span>
+                </li>
               ))}
             </ul>
-          </motion.div>
-
+          </div>
         </div>
 
-        {/* Bottom */}
-        <motion.div
-          variants={footerBottomVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6"
-        >
-          <p className="text-slate-500 text-sm font-medium">
-            {FOOTER_CONTENT.brand.copyright}
-          </p>
-        </motion.div>
+        {/* Bottom Bar */}
+        <div className="border-t border-stone-800/80 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-stone-400">
+          <p>{FOOTER_CONTENT.brand.copyright}</p>
+          <div className="flex items-center gap-6">
+            <a href="#about" className="hover:text-stone-300 transition-colors">
+              Privacy Protocols
+            </a>
+            <a href="#faq" className="hover:text-stone-300 transition-colors">
+              Terms of Advisory
+            </a>
+            <a href="#inquire" className="hover:text-stone-300 transition-colors">
+              Confidentiality Charter
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* Scroll To Top */}
+      {/* Floating Scroll To Top Button */}
       <motion.button
         variants={scrollButtonVariants}
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
         onClick={scrollToTop}
-        whileHover={{ scale: 1.1, y: -4 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-2xl shadow-primary/30"
+        aria-label="Scroll to top of page"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-8 right-8 z-50 w-11 h-11 rounded-full bg-stone-800/90 border border-stone-700 text-white flex items-center justify-center shadow-xl backdrop-blur-sm hover:bg-stone-700 transition-colors"
       >
-        <ChevronUp className="w-5 h-5" />
+        <ChevronUp className="w-4 h-4" />
       </motion.button>
     </footer>
   );

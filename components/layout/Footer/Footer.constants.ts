@@ -1,35 +1,37 @@
 export const FOOTER_CONTENT = {
   brand: {
-    name: "Prime Property",
-    description: "Solusi properti terbaik untuk investasi masa depan Anda. Menghadirkan hunian eksklusif dengan kenyamanan maksimal.",
-    copyright: `© ${new Date().getFullYear()} Prime Property. All rights reserved.`,
+    name: "PRIME PROPERTY",
+    description:
+      "A discreet real estate advisory dedicated to the acquisition, valuation, and stewardship of architecturally significant residences and private global estates.",
+    copyright: `© ${new Date().getFullYear()} Prime Property Group. All rights reserved. Private Client Advisory.`,
   },
   links: {
-    perusahaan: [
-      { name: "Tentang Kami", href: "#about" },
-      { name: "Layanan", href: "#layanan" },
-      { name: "Properti", href: "#properti" },
-      { name: "Proses", href: "#proses" },
+    portfolio: [
+      { name: "Villas & Estates", href: "/residences" },
+      { name: "Penthouses", href: "/residences" },
+      { name: "Modern Residences", href: "/residences" },
+      { name: "Off-Market Holdings", href: "/#inquire" },
     ],
-    dukungan: [
-      { name: "Pusat Bantuan", href: "#faq" },
-      { name: "Kebijakan Privasi", href: "#" },
-      { name: "Syarat & Ketentuan", href: "#" },
-      { name: "Kontak", href: "#kontak" },
+    advisory: [
+      { name: "Private Acquisitions", href: "/#services" },
+      { name: "Asset Stewardship", href: "/#services" },
+      { name: "Architectural Valuation", href: "/#services" },
+      { name: "Title & Escrow Governance", href: "/#services" },
     ],
-    layanan: [
-      { name: "Beli Properti", href: "#properti" },
-      { name: "Jual Properti", href: "#kontak" },
-      { name: "Sewa Apartemen", href: "#properti" },
-      { name: "Manajemen Aset", href: "#layanan" },
+    company: [
+      { name: "Heritage & Philosophy", href: "/#about" },
+      { name: "Client Stories", href: "/#testimonials" },
+      { name: "Advisory FAQ", href: "/#faq" },
+      { name: "Confidential Consultation", href: "/#inquire" },
     ],
   },
-  contact: {
-    title: "Hubungi Kami",
-    details: [
-      { label: "Email", value: "info@primeproperty.com", href: "mailto:info@primeproperty.com" },
-      { label: "Telepon", value: "+62 21 1234 5678", href: "tel:+622112345678" },
-      { label: "Alamat", value: "Jl. Sudirman No. 123, Jakarta Selatan", href: "#" },
+  offices: {
+    title: "Global Chambers",
+    locations: [
+      { city: "Jakarta", address: "Pacific Century Place, SCBD" },
+      { city: "Bali", address: "Sayan Ridge, Ubud" },
+      { city: "Singapore", address: "Marina Bay Financial Centre" },
+      { city: "London", address: "Berkeley Square, Mayfair" },
     ],
   },
 };

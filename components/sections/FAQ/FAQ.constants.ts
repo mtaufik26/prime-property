@@ -1,27 +1,45 @@
 export const FAQ_CONTENT = {
-  badge: "Pusat Bantuan",
-  title: "Pertanyaan Populer",
-  description: "Dapatkan jawaban cepat mengenai proses, legalitas, dan layanan Prime Property.",
+  badge: "Advisory FAQ",
+  title: "Frequently Asked Questions",
+  description:
+    "Essential information on our private listing standards, confidential viewings, and cross-border acquisition protocols.",
   questions: [
     {
-      id: "item-1",
-      question: "Bagaimana cara menjadwalkan kunjungan lokasi?",
-      answer: "Anda dapat menekan tombol 'Konsultasi Ahli' di bagian Hero atau langsung menghubungi nomor WhatsApp kami yang tertera di Footer.",
+      id: "faq-1",
+      question: "How do you preserve buyer and seller confidentiality?",
+      answer:
+        "Every engagement begins with a mutual non-disclosure agreement (NDA). For off-market residences, full addresses and architectural floorplans are only shared with pre-vetted buyers after proof of funds or banking references are verified.",
     },
     {
-      id: "item-2",
-      question: "Apakah harga properti sudah termasuk pajak?",
-      answer: "Harga yang tertera biasanya adalah harga dasar. Biaya lain seperti BPHTB, Notaris, dan Admin akan dirinci oleh tim kami saat konsultasi.",
+      id: "faq-2",
+      question: "What criteria qualify a residence for your portfolio?",
+      answer:
+        "We accept less than 8% of properties submitted to our review board. Every home must demonstrate exceptional spatial integrity, recognized architect or master builder lineage, prime geographic orientation, and fully unencumbered legal documentation.",
     },
     {
-      id: "item-3",
-      question: "Berapa lama proses persetujuan KPR?",
-      answer: "Proses KPR biasanya memakan waktu 2-4 minggu hari kerja, tergantung pada kelengkapan dokumen dan kebijakan bank mitra.",
+      id: "faq-3",
+      question: "Can international or non-resident buyers acquire property?",
+      answer:
+        "Yes. Our legal counsel coordinates structuring through approved long-term leasehold covenants, foreign investment corporate entities (PT PMA), or sovereign-approved title deeds, ensuring full compliance and asset protection.",
     },
     {
-      id: "item-4",
-      question: "Apakah Prime Property memiliki legalitas yang sah?",
-      answer: "Tentu. Seluruh properti yang kami pasarkan telah melalui verifikasi legalitas yang ketat untuk menjamin keamanan investasi Anda.",
+      id: "faq-4",
+      question: "How are private viewings organized?",
+      answer:
+        "All property tours are private, accompanied by a senior advisory director. For overseas clients, we offer private high-definition video walkthroughs and independent architectural condition audits prior to in-person visits.",
+    },
+    {
+      id: "faq-5",
+      question: "What is your fee structure and transaction governance?",
+      answer:
+        "We operate under a transparent, fixed-percentage advisory agreement with zero hidden administrative charges. All transaction funds are routed through regulated tier-one escrow institutions.",
     },
   ],
+  supportCard: {
+    title: "Need bespoke counsel?",
+    description:
+      "Our senior partners are available for confidential consultations regarding off-market listings or portfolio restructuring.",
+    actionText: "Contact Advisory Desk",
+    actionHref: "#inquire",
+  },
 };
